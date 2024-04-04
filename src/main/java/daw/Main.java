@@ -4,8 +4,10 @@
 
 package daw;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.xml.bind.JAXBException;
 
 /**
  *
@@ -13,7 +15,7 @@ import java.util.List;
  */
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws JAXBException, FileNotFoundException {
         //creamos 50 aplicaciones usando constructor por defecto y lo guardamos
         //en una lista
         List<App> lista = new ArrayList<>();
@@ -34,5 +36,11 @@ public class Main {
         for(int i = 0; i < lista.size(); i++) {
             readWrite.write("./appscsv2/" + lista.get(i).getNombre() + ".csv", lista.get(i).toString());
         }
+        
+        //método para escribir en un xml los datos de la lista
+        readWrite.writeXml("aplicacionesxml.xml", lista);
+        
+        //método para leer el xml
+        readWrite.readXml("aplicacionesxml.xml").forEach(System.out::println);
     }
 }
