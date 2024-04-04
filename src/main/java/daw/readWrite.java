@@ -4,6 +4,8 @@
  */
 package daw;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -114,5 +116,18 @@ public class readWrite {
         ArrayList<App> listaApps = catalogo.getLista();
 
         return listaApps;
+    }
+    
+    public static void writeJson (String file, List<App> lista) throws IOException {
+        
+        ArrayList<App> listArray = new ArrayList<>(lista);
+        
+        ObjectMapper mapeador = new ObjectMapper();
+        
+        // Formato JSON bien formateado. Si se comenta, el fichero queda minificado
+        mapeador.configure(SerializationFeature.INDENT_OUTPUT, true);
+
+        // Escribe en un fichero JSON el catálogo de muebles
+        mapeador.writeValue(new File("./appjson/" + file), listArray);
     }
 }
